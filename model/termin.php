@@ -17,6 +17,53 @@
  
         }
 
+
+        public static function vratiSveTermine($conn){
+            $upit = "select * from termin t inner join kozmeticar k on t.kozmeticar=k.id inner join tretman tr on tr.id = t.tretman";
+
+            return $conn->query($upit); 
+        }
+
+
+        public static function dodajTermin($termin, $conn){
+            $upit = "insert into termin(datumVreme,kozmeticar,tretman) values('termin->datumVreme','$termin->kozmeticar','$termin->tretman')";
+
+            return $conn->query($upit); 
+        }
+
+        public static function obrisiTermin($termin, $conn){
+            $upit = "delete from termin where id=$termin->id";
+
+            return $conn->query($upit); 
+
+        }
+
+        public static function prikaziTerminpoID($id, $conn){
+            $upit = "select * from termin t inner join kozmeticar k on t.kozmeticar=k.id inner join tretman tr on tr.id = t.tretman where t.id=$id";
+            $myArray = array();
+            $result = $conn->query($upit);
+            
+            if($result){
+                while($row = $result->fetch_array()){
+    
+                    $myArray[] = $row;
+                }
+            }
+            
+            return  $myArray ;
+
+        }
+
+        
+
+
+
+
+
+
+
+
+
     }
 
 
