@@ -1,5 +1,5 @@
 <?php
-    include 'login.php';
+    include 'loginregister.php';
 
      
 
@@ -44,13 +44,17 @@
                                     </form>
                                 </div>
                                 <div class="sign-up-form">
-                                    <div class="group"> <label for="user" class="label">Username</label> <input id="user" type="text" class="input" placeholder="Create your Username"> </div>
-                                    <div class="group"> <label for="pass" class="label">Password</label> <input id="pass" type="password" class="input" data-type="password" placeholder="Create your password"> </div>
-                                    <div class="group"> <label for="pass" class="label">Repeat Password</label> <input id="pass" type="password" class="input" data-type="password" placeholder="Repeat your password"> </div>
-                                    <div class="group"> <label for="pass" class="label">Email Address</label> <input id="pass" type="text" class="input" placeholder="Enter your email address"> </div>
-                                    <div class="group"> <input type="submit" class="button" value="Sign Up"> </div>
-                                    <div class="hr"></div>
-                                    <div class="foot"> <label for="tab-1">Already Member?</label> </div>
+                                    <form action="" method="post">
+                                        <div class="group"> <label for="ime" class="label">Ime</label> <input id="ime" name="ime" type="text" class="input" placeholder="Upisi ime" required> </div>
+                                        <div class="group"> <label for="prezime" class="label">Prezime</label> <input id="prezime" name="prezime" type="text" class="input" placeholder="Upisi prezime" required> </div>
+
+                                        <div class="group"> <label for="email" class="label">Email</label> <input id="emailR" name="emailR" type="email" class="input" placeholder="Create your Username"required> </div>
+                                        <div class="group"> <label for="pass" class="label">Lozinka</label> <input id="passR"  name = "passR" type="password" class="input" data-type="password" placeholder="Upisi lozinku"required> </div>
+                                        <div class="group"> <label for="pass" class="label">Potvrda lozinke</label> <input id="passR2"  name = "passR2" type="password" class="input" data-type="password" placeholder="Ponovo upisi lozinku"required> </div>
+                                        
+                                        <div class="group"> <input type="submit" class="button" name="register" value="Sign Up"> </div>
+                                   
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -58,6 +62,9 @@
                 </div>
             </div>
         </div>
+
+
+
     
 
 
