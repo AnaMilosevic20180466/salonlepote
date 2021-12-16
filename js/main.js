@@ -223,3 +223,40 @@ $('#promeniTermin').submit(function () { //kada korisnik klikne dugme unutar mod
 });
 
 
+
+
+
+
+//kada hocemo da dodamo novi tretman u tabelu tretmana
+$('#dodajnovitretmanform').submit(function () {
+    event.preventDefault();  
+    const $form = $(this); 
+    const $input = $form.find('input,select,button,textarea');
+    const serijalizacija = $form.serialize(); 
+
+    $input.prop('disabled', true);   
+
+
+    request = $.ajax({  
+        url: 'handler/add.php',  
+        type: 'post',
+        data: serijalizacija
+    });
+    console.log(request);
+    request.done(function (response, textStatus, jqXHR) {
+      
+        if (response === "Success") {
+            alert("Tretman dodat");
+            console.log("Uspesno dodavanje");
+            location.reload(true);
+        }
+        else {
+       
+            console.log("Tretman nije dodat" + response);
+        }
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown) {
+        console.error('Greska: ' + textStatus, errorThrown);
+    });
+});

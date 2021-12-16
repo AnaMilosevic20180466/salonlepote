@@ -5,17 +5,15 @@
         private $naziv;
         private $opis;
         private $adresa;
-        private $cena;
-        private $slika;
+        private $cena; 
 
 
 
-        public function __construct($id=null, $naziv=null,$opis=null, $adresa=null, $cena=null,$slika=null){
+        public function __construct($id=null, $naziv=null,$opis=null, $adresa=null, $cena=null ){
             $this->id=$id;
             $this->naziv=$naziv;
             $this->adresa=$adresa;
-            $this->cena=$cena; 
-            $this->slika=$slika; 
+            $this->cena=$cena;  
             $this->opis=$opis; 
 
         }
@@ -50,7 +48,13 @@
 
         }
 
+        public static function dodajNoviTretman($tretman, $conn){
+            $upit = "insert into tretman(naziv,opis,adresa, cena) values('$tretman->naziv','$tretman->opis','$tretman->adresa',$tretman->cena)";
 
+            return $conn->query($upit); 
+
+
+        }
 
 
 
