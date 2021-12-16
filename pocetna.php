@@ -5,7 +5,8 @@
     //ovde prvo ucitavamo sve podatke o terminima da bismo mogli da ih prikazemo u tabeli 
 
     $termini = Termin::vratiSveTermine($conn);
-
+    
+    
 
 
 
