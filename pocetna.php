@@ -11,7 +11,7 @@
         header('Location: index.php'); 
     }
 
-    
+
     
 
 ?>
@@ -34,7 +34,13 @@
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
  
  
-    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script> 
+     
+   
+     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 
 </head>
 <body> 
@@ -75,16 +81,23 @@
         </nav>
 
 
+        <br><br><br>
+
+   
+    
 
 
 
-    <br><br><br>
+
+
+
+
 
     <div class="container">
 
 
 
-
+                            <h2>Rezervacije</h2>
         <table class="table">
         <thead>
             <tr>
@@ -131,7 +144,7 @@
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#viewModal" id="prikazi">Prikazi</button>
             <button type="button" class="btn btn-secondary"  data-toggle="modal" data-target="#addModal" id="dodaj"     >Napravi novi termin</button>
             <button type="button" class="btn btn-danger" id="otkaziTermin">Obrisi termin</button>
-            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#viewModal" id="prikazi">Izmeni</button>
+            <button type="button" class="btn btn-light" id="promeni" data-toggle="modal" data-target="#editModal" id="prikazi">Izmeni</button>
         </div>
 
  
@@ -272,6 +285,90 @@
      
 
 
+ <!-- Modal za izmenu termina -->
+ <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Izmeni termin </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="promeniTermin" method="POST" enctype="multipart/form-data">
+                        <div class="modal-body">
+                                   <input type="hidden" id="tretmanZaIzmenu" name="tretmanZaIzmenu">
+
+                                <div class="form-group">
+                                    <label for="kozmeticarE" class="col-form-label">Kozmeticar</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"   aria-hidden="true"></i>
+                                        </div>
+                                        <input type="text" class="form-control" id="kozmeticarE" name="kozmeticarE"
+                                              value=<?php echo( Kozmeticar::vratiKozmeticaraPoID( $_SESSION['ulogovaniKozmeticar'],$conn)) ?> readonly>
+                                        <input type="hidden" class="form-control" id="idkozmeticaraEhidden" name="idkozmeticaraEhidden"
+                                              value=<?php echo $_SESSION['ulogovaniKozmeticar']  ?> readonly>
+                                    </div>
+                              </div>
+
+
+                              <div class="form-group">
+                                      <label for="tretmaniE">Odaberi tretman</label><br>
+                                      <select name="tretmaniE" id="tretmaniE">
+                                      <?php
+                                         $tretmani = Tretman::vratiSveTretmane($conn);  
+                                        while($red = $tretmani->fetch_array()):
+                                          $nazivTretmana=$red["naziv"];
+                                            echo  $nazivTretmana;
+                                      ?>
+                                      
+                                        <option value=<?php echo $red["idT"]?>><?php echo $red["naziv"]?></option>
+
+
+                                        <?php   endwhile;   ?>
+                                      </select>
+                                </div>
+
+
+ 
+                           
+                             
+                            
+                            
+                                <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Datum rezervacije</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupFileAddon01"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                            <div class="custom-file">
+                                                <input type="date" id="datumE" name="datumE" class="form-control"  required="required" />
+                                            </div>
+                                        </div>
+                                </div>
+  
+         
+
+                       
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Odustani</button>
+                            <button type="submit" class="btn btn-success" id="addButton">Potvrdi</button>
+                        </div>
+
+
+
+                    </form>
+                    </div>
+              
+           
+                </div>
+            </div>
+
+ <!-- kraj Modala za izmenu termina -->
 
 
 
@@ -294,13 +391,6 @@
 
 
 
-
-    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
-     
-   
-     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
      <script src="js/main.js"></script>
 

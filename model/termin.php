@@ -13,8 +13,6 @@
             $this->datumVreme=$datumVreme;  
             $this->kozmeticar=$kozmeticar;            
             $this->tretman=$tretman;            
-
- 
         }
 
 
@@ -36,6 +34,12 @@
 
             return $conn->query($upit); 
 
+        }
+
+        public static function promeniTermin($termin,$conn){
+            $upit = "update termin set datumVreme='$termin->datumVreme', tretman=$termin->tretman where id=$termin->id";
+
+            return $conn->query($upit); 
         }
 
         public static function prikaziTerminpoID($id, $conn){

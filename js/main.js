@@ -1,3 +1,29 @@
+// //da se ucitaju svi tretmani iz baze i da se prikazu na stranici
+// $(document).ready(function(){
+    
+//     request = $.ajax({
+//         url: 'handler/getTretmane.php',  //pozivamo get metodu koju smo napisali
+//         type: 'post',        
+//         dataType: 'json'
+//     });
+     
+  
+//     request.done(function (response, textStatus, jqXHR) {
+//         console.log(response);
+       
+//         for (const red in response) {
+//             console.log(red['naziv']);
+//             $('h5[name="naziv"]').text("AA");
+//         }
+
+//     });
+//     request.fail(function (jqXHR, textStatus, errorThrown) {
+//         console.error('The following error occurred: ' + textStatus, errorThrown);
+//     });
+
+// });
+
+
 //za profile modal
 $('#prikazi').click(function () {
     const checked = $('input[name=checked-donut]:checked'); //kupimo koji red iz tabele je korisnik selektovao
@@ -120,5 +146,80 @@ $('#otkaziTermin').click(function () {
 });
 
 
+
+
+//kada hocemo neki vec postojeci termin da editujemo, kada korisnik klikne na glavno dugme
+//treba da se otvori modal koji ce biti popunjen podacima koji se nalaze u tabeli 
+$('#promeni').click(function () {
+    const checked = $('input[name=checked-donut]:checked');
+     
+    request = $.ajax({
+        url: 'handler/get.php',
+        type: 'post',
+        data: { 'id': checked.val() },
+        dataType: 'json'
+    });
+
+
+    request.done(function (response, textStatus, jqXHR) {
+ 
+
+
+       $('#tretmanZaIzmenu').val(response[0]["idT"]); //skriveno polje 
+ 
+        
+       $('#kozmeticarE').val("      "+response[0]['ime']+" "+response[0]['prezime']);
+       $('#idkozmeticaraEhidden').val(response[0]["idK"]);
+ 
+
+       $('#tretmaniE').val(response[0]["idT"]);
+ 
+
+        $('#datumE').val(response[0]['datumVreme'].trim());   
+ 
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown) {
+        console.error('The following error occurred: ' + textStatus, errorThrown);
+    });
+
+});
+
+
+//sada kada korisnik unese neke izmene hocemo da klikom na dugme potvrdi te izmene zaista unesemo u bazu
+$('#promeniTermin').submit(function () { //kada korisnik klikne dugme unutar modala
+        
+    event.preventDefault();
+
+    const $form =  $(this);
+   
+    const $inputs = $form.find('input, select, button, textarea');
+    
+    const serializedData = $form.serialize();
+   
+    $inputs.prop('disabled', true);
+
+  
+    request = $.ajax({
+        url: 'handler/edit.php',
+        type: 'post',
+        data: serializedData
+    })
+
+    request.done(function (response, textStatus, jqXHR) {
+        console.log(response);
+        $('#editModal').modal('hide');
+        location.reload(true);
+        $('#promeniTermin').reset;
+
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown) {
+        console.error('The following error occurred: ' + textStatus, errorThrown);
+});
+
+
+
+});
 
 

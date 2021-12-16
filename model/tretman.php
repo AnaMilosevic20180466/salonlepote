@@ -33,9 +33,22 @@
 
 
 
+        public static function vratiSveTretmane2($conn){
+            $upit ="select * from tretman";
 
+            $myArray = array();
+            $result = $conn->query($upit);
+            
+            if($result){
+                while($row = $result->fetch_array()){
+    
+                    $myArray[] = $row;
+                }
+            }
+            
+            return  $myArray ;
 
-
+        }
 
 
 
