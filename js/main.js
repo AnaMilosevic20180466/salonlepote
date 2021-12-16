@@ -260,3 +260,22 @@ $('#dodajnovitretmanform').submit(function () {
         console.error('Greska: ' + textStatus, errorThrown);
     });
 });
+
+
+
+
+
+//pretrazivanje tretmana po nazivu ili opisu tretmana 
+$(document).ready(function() {
+    $("#searchbar").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#tabelaTretmana tr").filter(function() {
+            $(this).toggle($(this).text()
+            .toLowerCase().indexOf(value) > -1)
+        });
+      
+    });
+});
+
+
+

@@ -70,6 +70,25 @@
         }
 
 
+        public static function vratiKozmeticaraPoIDSviPodaci($id,$conn){
+            $upit = "Select * from kozmeticar where idK='$id'";
+
+
+            $myArray = array();
+            $result= $conn->query($upit);
+            if($result){
+                while($row = $result->fetch_array()){
+
+                    $myArray[] = $row;
+                }
+            }
+            return  $myArray[0] ;
+        }
+
+
+
+
+
     }
 
 

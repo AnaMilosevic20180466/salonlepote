@@ -10,9 +10,9 @@
     if(!isset($_SESSION['ulogovaniKozmeticar'])){ //ako korisnik nije ulogovan na sistem mora prvo da se uloguje
         header('Location: index.php'); 
     }
+    $kozmeticar = Kozmeticar::vratiKozmeticaraPoIDSviPodaci($_SESSION['ulogovaniKozmeticar'],$conn);
 
-
-    
+   
 
 ?>
 
@@ -45,36 +45,30 @@
 </head>
 <body style="   background-image: url('slike/bg01.jpg');    background-repeat: no-repeat;   background-attachment: fixed;  background-size: cover;  "> 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a class="navbar-brand" href="#"><?php  echo Kozmeticar::vratiKozmeticaraPoID($_SESSION['ulogovaniKozmeticar'],$conn);  ?></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Disabled</a>
-                        </li>
+                        
+                      
+                            <li class="nav-item dropdown">
+                                
+
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user" aria-hidden="true"></i>   <?php  echo Kozmeticar::vratiKozmeticaraPoID($_SESSION['ulogovaniKozmeticar'],$conn);  ?>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown"> 
+
+                                <a class="dropdown-item" href="#" id="emailKozmeticara"><?php echo $kozmeticar['email']    ?> </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="odjava.php">Odjavi se</a>
+                                </div>
+                            </li> 
                         </ul>
                         <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchbar">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
                     </div>
@@ -126,8 +120,8 @@
             </table>
 
             <div>
-                <button type="button" class="btn btn-secondary"  data-toggle="modal" data-target="#dodajTretmanModal" id="dodajT">Dodaj novi tretman</button>
-                <button type="button" class="btn btn-light" id="promeniT" data-toggle="modal" data-target="#editModal"  >Izmeni tretman</button>
+                <button type="button" class="btn btn-secondary"  data-toggle="modal" data-target="#dodajTretmanModal" id="dodajT"><i class="fa fa-plus" aria-hidden="true"></i>  Dodaj novi tretman</button>
+ 
             </div>
                         <br>
 
@@ -140,7 +134,7 @@
 <!-- Tabela svih rezervacija -->
     <div class="container" style="background-color: rgb(200,200,200,0.8);">
 
-
+                        <br>
 
       <h2>Rezervacije</h2>
         <table class="table" name = "tabelaRezeracija" id = "tabelaRezeracija">
@@ -187,12 +181,12 @@
 
         <div>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#viewModal" id="prikazi">Prikazi</button>
-            <button type="button" class="btn btn-secondary"  data-toggle="modal" data-target="#addModal" id="dodaj"     >Napravi novi termin</button>
-            <button type="button" class="btn btn-danger" id="otkaziTermin">Obrisi termin</button>
-            <button type="button" class="btn btn-light" id="promeni" data-toggle="modal" data-target="#editModal" >Izmeni</button>
+            <button type="button" class="btn btn-secondary"  data-toggle="modal" data-target="#addModal" id="dodaj"     ><i class="fa fa-plus" aria-hidden="true"></i>  Napravi novi termin</button>
+            <button type="button" class="btn btn-danger" id="otkaziTermin"> <i class="fa fa-trash" aria-hidden="true"></i>   Obrisi termin</button>
+            <button type="button" class="btn btn-light" id="promeni" data-toggle="modal" data-target="#editModal" > <i class="fa fa-pencil" aria-hidden="true"></i>  Izmeni</button>
         </div>
 
- 
+                  <br>
     </div>
 
 
@@ -429,7 +423,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Dodaj novu porudzbinu </h5>
+                        <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-flower"></i>  Dodaj novi tretman  </h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -443,7 +437,7 @@
                                     <label for="nazivNovogTretmana" class="col-form-label">Naziv</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-balance-scale-right" aria-hidden="true"></i>
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-spa"></i>
                                         </div>
                                         <input type="text" class="form-control" id="nazivNovogTretmana" name="nazivNovogTretmana"  required="required">
                                     </div>
@@ -455,7 +449,7 @@
                                     <label for="opisNovogTretmana" class="col-form-label">Opis</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-balance-scale-right" aria-hidden="true"></i>
+                                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-picture-o" aria-hidden="true"></i></i>
                                         </div>
                                         <input type="text" class="form-control" id="opisNovogTretmana" name="opisNovogTretmana"  required="required">
                                     </div>
@@ -466,7 +460,7 @@
                                     <label for="adresaNovogTretmana" class="col-form-label">Adresa lokala</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-balance-scale-right" aria-hidden="true"></i>
+                                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-home" aria-hidden="true"></i></i>
                                         </div>
                                         <input type="text" class="form-control" id="adresaNovogTretmana" name="adresaNovogTretmana"  required="required">
                                     </div>
@@ -477,7 +471,7 @@
                                     <label for="cenaNovogTretmana" class="col-form-label">Cena</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-balance-scale-right" aria-hidden="true"></i>
+                                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-tag" aria-hidden="true"></i></i>
                                         </div>
                                         <input type="text" class="form-control" id="cenaNovogTretmana" name="cenaNovogTretmana"  required="required">
                                     </div>
