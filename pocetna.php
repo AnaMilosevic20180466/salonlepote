@@ -2,13 +2,17 @@
     include 'dbb.php';
     include 'model/termin.php';
     include 'loginregister.php';
+    include 'model/tretman.php';
     //ovde prvo ucitavamo sve podatke o terminima da bismo mogli da ih prikazemo u tabeli 
 
     $termini = Termin::vratiSveTermine($conn);
     
+    if(!isset($_SESSION['ulogovaniKozmeticar'])){ //ako korisnik nije ulogovan na sistem mora prvo da se uloguje
+        header('Location: index.php'); 
+    }
 
-
-
+    
+    
 
 ?>
 
@@ -125,9 +129,9 @@
 
         <div>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#viewModal" id="prikazi">Prikazi</button>
-            <button type="button" class="btn btn-secondary">Napravi novi termin</button>
+            <button type="button" class="btn btn-secondary"  data-toggle="modal" data-target="#addModal" id="dodaj"     >Napravi novi termin</button>
             <button type="button" class="btn btn-danger">Obrisi termin</button>
-            <button type="button" class="btn btn-light">Izmeni</button>
+            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#viewModal" id="prikazi">Izmeni</button>
         </div>
 
  
@@ -179,9 +183,90 @@
         <!-- profile modal end -->
 
 
+ <!-- Modal za rezervisanje novog termina -->
+ <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Rezervisi novi termin </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="rezervisi" method="POST" enctype="multipart/form-data">
+                        <div class="modal-body">
+                                   
+
+                                <div class="form-group">
+                                    <label for="kozmeticar" class="col-form-label">Kozmeticar</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"   aria-hidden="true"></i>
+                                        </div>
+                                        <input type="text" class="form-control" id="kozmeticar" name="kozmeticar"
+                                              value=<?php echo( Kozmeticar::vratiKozmeticaraPoID( $_SESSION['ulogovaniKozmeticar'],$conn)) ?> readonly>
+                                        <input type="hidden" class="form-control" id="idkozmeticara" name="idkozmeticara"
+                                              value=<?php echo $_SESSION['ulogovaniKozmeticar']  ?> readonly>
+                                    </div>
+                              </div>
+
+
+                              <div class="form-group">
+                                      <label for="tretmani">Odaberi tretman</label><br>
+                                      <select name="tretmani" id="tretmani">
+                                      <?php
+                                         $tretmani = Tretman::vratiSveTretmane($conn);  
+                                        while($red = $tretmani->fetch_array()):
+                                          $nazivTretmana=$red["naziv"];
+                                            echo  $nazivTretmana;
+                                      ?>
+                                      
+                                        <option value=<?php echo $red["idT"]?>><?php echo $red["naziv"]?></option>
+
+
+                                        <?php   endwhile;   ?>
+                                      </select>
+                                </div>
+
+
+ 
+                           
+                             
+                            
+                            
+                                <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Datum rezervacije</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupFileAddon01"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                            <div class="custom-file">
+                                                <input type="date" id="datum" name="datum" class="form-control"  required="required" />
+                                            </div>
+                                        </div>
+                                </div>
+  
+         
+
+                       
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Odustani</button>
+                            <button type="submit" class="btn btn-success" id="addButton">Potvrdi</button>
+                        </div>
 
 
 
+                    </form>
+                    </div>
+              
+           
+                </div>
+            </div>
+
+ <!-- kraj Modala za rezervisanje novog termina -->
 
 
      

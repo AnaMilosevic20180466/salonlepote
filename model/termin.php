@@ -26,12 +26,12 @@
 
 
         public static function dodajTermin($termin, $conn){
-            $upit = "insert into termin(datumVreme,kozmeticar,tretman) values('termin->datumVreme','$termin->kozmeticar','$termin->tretman')";
+            $upit = "insert into termin(datumVreme,kozmeticar,tretman) values('$termin->datumVreme','$termin->kozmeticar','$termin->tretman')";
 
             return $conn->query($upit); 
         }
 
-        public static function obrisiTermin($termin, $conn){
+        public static function otkaziTermin($termin, $conn){
             $upit = "delete from termin where id=$termin->id";
 
             return $conn->query($upit); 

@@ -1,17 +1,18 @@
+//za profile modal
 $('#prikazi').click(function () {
     const checked = $('input[name=checked-donut]:checked'); //kupimo koji red iz tabele je korisnik selektovao
     console.log(checked.val());
     request = $.ajax({
-        url: 'handler/get.php', 
+        url: 'handler/get.php',  //pozivamo get metodu koju smo napisali
         type: 'post',
-        data: { 'id': checked.val() },
+        data: { 'id': checked.val() }, //prosledjujemo joj id koji smo pokupili iz cekiranog kruga
         dataType: 'json'
     });
    
     //console.log(request);
     request.done(function (response, textStatus, jqXHR) {
     
-       
+       //popunjavamo polja u modalu za profil
         $('#modelPreview').text(response[0]['naziv']);
         console.log(response[0]['naziv']);
 
@@ -23,13 +24,8 @@ $('#prikazi').click(function () {
 
         $('#kozmeticar').text("      "+response[0]['ime']+" "+response[0]['prezime']);
         console.log(response[0]['ime']+" "+response[0]['prezime']);
- 
-
-      
-
-        $('#id').val(checked.val());
- 
-
+  
+        //na osnovu neke kljucne reci biramo koja slika ce se prikazati za odabrani termin u profil modalu
          if (response[0]['naziv'].toUpperCase().includes("LICE") ||response[0]['naziv'].toUpperCase().includes("LICA")  ) {
             document.getElementById("Img").src = 'slike/lice.jpg';
          } else if (response[0]['naziv'].toUpperCase().includes("MASAZA")) {
@@ -49,3 +45,52 @@ $('#prikazi').click(function () {
     });
 
 });
+
+
+
+//za dodaj novu rezervaciju modal
+//
+$('#rezervisi').submit(function () {
+  
+    event.preventDefault(); //zaustavi refresovanje na stranici
+   
+    const $form = $(this);//this se odnosi na formu #rezervisi
+    const $input = $form.find('input,select,button,textarea');
+    const serijalizacija = $form.serialize(); //serijalizujemo podatke iz forme i saljemo ih nasem postu
+
+    
+  
+    $input.prop('disabled', true); //na sve inpute postavljamo property da onemogucimo da korisnik menja ono sto je uneo dok se ne zavrsi ubacivanje u tabelu
+
+
+    request = $.ajax({  
+        url: 'handler/add.php',  
+        type: 'post',
+        data: serijalizacija
+    });
+
+    request.done(function (response, textStatus, jqXHR) {
+       
+        if (response === "Success") {
+            alert("Uspesno rezervisano");
+            console.log("Uspesno rezervisano");
+            location.reload(true);
+        }
+        else {
+       
+            console.log("Rezervacija nije dodata" + response);
+        }
+    });
+
+    request.fail(function (jqXHR, textStatus, errorThrown) {
+        console.error('Greska: ' + textStatus, errorThrown);
+    });
+});
+
+
+
+
+
+
+
+
