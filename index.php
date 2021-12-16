@@ -1,10 +1,5 @@
 <?php
-    include 'loginregister.php';
-
- 
-
-
-
+    include 'loginregister.php'; 
 ?>
 
 
@@ -22,6 +17,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
    
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/autocomplete.js"></script>
+    <script type="text/javascript">
+        function place(ele){
+            document.getElementById('email').value = ele.innerHTML;
+            document.getElementById("livesearch").style.display = "none";
+        }
+</script>
+<style type="text/css"> 
+#livesearch{ 
+color: white;
+  margin:5px;
+  width:220px;
+  font: 600 16px/18px 'Open Sans', sans-serif
+}
+ 
+</style>
+
 </head>
 <body>
     <br><br><br><br><br><br>
@@ -36,7 +48,7 @@
                             <div class="login-space">
                                 <div class="login">
                                     <form action="" method="post">
-                                        <div class="group"> <label for="email" class="label">Email</label> <input id="email"  name="email" type="email" class="input" placeholder="Enter your email" required> </div>
+                                        <div class="group"> <label for="email" class="label">Email</label> <input id="email"  name="email" type="email" class="input" placeholder="Enter your email" required onkeyup="sugestija(this.value)"> </div> <div id="livesearch"></div>
                                         <div class="group"> <label for="pass" class="label">Password</label> <input id="pass"  name = "pass" type="password" class="input" data-type="password" placeholder="Enter your password" required>  </div>
                                         <br><br><br>
                                         <div class="group"> <input type="submit" class="button" value="Sign In" name="login" id="login"> </div>
