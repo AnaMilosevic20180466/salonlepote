@@ -278,4 +278,26 @@ $(document).ready(function() {
 });
 
 
+//funkcija za soritranje tretmana po ceni 
+function sortirajPoCeni() {
+    var table=$('#tabelaTretmana');
+    var tbody =$('#teloTabele');
 
+    tbody.find('tr').sort(function(a, b)  {
+        if($('#poredak').val()=='asc') 
+        {
+            return $('td:last', a).text().localeCompare($('td:last', b).text());
+        } else  {
+            return $('td:last', b).text().localeCompare($('td:last', a).text());
+        }
+
+    }).appendTo(tbody);
+	
+    var sort_order=$('#poredak').val();
+    if(sort_order=="asc")  { //ako smo malopre sortirali rastuce
+        document.getElementById("poredak").value="desc"; //sledeci put treba da soritiramo opadajuce
+    }
+    if(sort_order=="desc") {
+        document.getElementById("poredak").value="asc";
+    }
+}

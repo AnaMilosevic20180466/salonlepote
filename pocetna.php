@@ -83,7 +83,8 @@
         <div class="container" style="background-color: rgb(200,200,200,0.8);">
 
             <br>
-
+            <button type="button" class="btn btn-primary" onclick="sortirajPoCeni() " style="float:right"> <i class="fa fa-sort" aria-hidden="true"></i>   Sortiraj tretmane po ceni</button>
+            
             <h2>Tretmani koje imamo u ponudi</h2>
             <table class="table" name = "tabelaTretmana" id="tabelaTretmana">
             <thead>
@@ -97,7 +98,7 @@
 
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="teloTabele">
 
                      <?php
                         $tretmani = Tretman::vratiSveTretmane($conn);  
@@ -118,7 +119,8 @@
 
             </tbody>
             </table>
-
+            <!-- Sledeca linija koda nam treba da bismo cuvali podatak da li treba da soritamo rastuce ili opadajuce -->
+            <input type="hidden" id="poredak" value="asc"> 
             <div>
                 <button type="button" class="btn btn-secondary"  data-toggle="modal" data-target="#dodajTretmanModal" id="dodajT"><i class="fa fa-plus" aria-hidden="true"></i>  Dodaj novi tretman</button>
  
@@ -494,7 +496,7 @@
     </div>
  </div>
 
-
+                      <br><br><br>                        
 
 
 
