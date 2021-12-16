@@ -37,8 +37,37 @@
 
 
 
+        public static function vratiKozmeticaraPoEmailu($email,$conn){
+            $upit = "Select * from kozmeticar where email='$email'";
 
 
+            $myArray = array();
+            $result= $conn->query($upit);
+            if($result){
+                while($row = $result->fetch_array()){
+
+                    $myArray[] = $row;
+                }
+            }
+            return  $myArray[0]['idK'] ;
+        }
+
+
+        
+        public static function vratiKozmeticaraPoID($id,$conn){
+            $upit = "Select * from kozmeticar where idK='$id'";
+
+
+            $myArray = array();
+            $result= $conn->query($upit);
+            if($result){
+                while($row = $result->fetch_array()){
+
+                    $myArray[] = $row;
+                }
+            }
+            return  $myArray[0]["ime"]  . " " . $myArray[0]["prezime"] ;
+        }
 
 
     }

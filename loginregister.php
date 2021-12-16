@@ -2,6 +2,7 @@
     include 'dbb.php';
     include 'model/kozmeticar.php';
 
+    session_start();
     if(isset($_POST['login']) ){ //kada korisnik klikne dugme login
         //preuzimamo podatke iz forme 
         $email = $_POST['email'];
@@ -13,6 +14,7 @@
 
         if($status){
             echo "ULOGOVAN";
+            $_SESSION['ulogovaniKozmeticar'] = Kozmeticar::vratiKozmeticaraPoEmailu($email,$conn);
             header('Location: pocetna.php'); //ako je korisnik ulogovan mozemo da ga posaljemo na glavnu stranicu
         }else{
             echo "GRESKA";
@@ -37,6 +39,7 @@
     
             if($status){
                 echo "Registrovan";
+                $_SESSION['ulogovaniKozmeticar'] = Kozmeticar::vratiKozmeticaraPoEmailu($email,$conn);
                 header('Location: pocetna.php'); //ako je korisnik ulogovan mozemo da ga posaljemo na glavnu stranicu
             }else{
                 echo "GRESKA";

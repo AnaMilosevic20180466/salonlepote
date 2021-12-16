@@ -1,9 +1,7 @@
 <?php
     include 'loginregister.php';
 
-     
-
-    session_start();
+ 
 
 
 

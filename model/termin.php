@@ -19,7 +19,7 @@
 
 
         public static function vratiSveTermine($conn){
-            $upit = "select * from termin t inner join kozmeticar k on t.kozmeticar=k.id inner join tretman tr on tr.id = t.tretman";
+            $upit = "select * from termin t inner join kozmeticar k on t.kozmeticar=k.idK inner join tretman tr on tr.idT = t.tretman";
 
             return $conn->query($upit); 
         }
@@ -39,7 +39,7 @@
         }
 
         public static function prikaziTerminpoID($id, $conn){
-            $upit = "select * from termin t inner join kozmeticar k on t.kozmeticar=k.id inner join tretman tr on tr.id = t.tretman where t.id=$id";
+            $upit = "select * from termin t inner join kozmeticar k on t.kozmeticar=k.idK inner join tretman tr on tr.idT = t.tretman where t.id=$id";
             $myArray = array();
             $result = $conn->query($upit);
             
