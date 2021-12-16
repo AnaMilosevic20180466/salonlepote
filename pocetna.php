@@ -130,7 +130,7 @@
         <div>
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#viewModal" id="prikazi">Prikazi</button>
             <button type="button" class="btn btn-secondary"  data-toggle="modal" data-target="#addModal" id="dodaj"     >Napravi novi termin</button>
-            <button type="button" class="btn btn-danger">Obrisi termin</button>
+            <button type="button" class="btn btn-danger" id="otkaziTermin">Obrisi termin</button>
             <button type="button" class="btn btn-light" data-toggle="modal" data-target="#viewModal" id="prikazi">Izmeni</button>
         </div>
 

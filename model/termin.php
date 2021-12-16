@@ -31,8 +31,8 @@
             return $conn->query($upit); 
         }
 
-        public static function otkaziTermin($termin, $conn){
-            $upit = "delete from termin where id=$termin->id";
+        public static function otkaziTermin($id, $conn){
+            $upit = "delete from termin where id=$id";
 
             return $conn->query($upit); 
 

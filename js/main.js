@@ -90,6 +90,34 @@ $('#rezervisi').submit(function () {
 
 
 
+//funkcija za otkazivanje (brisanje termina iz tabele rezervacija)
+
+$('#otkaziTermin').click(function () { 
+
+    const checked = $('input[name=checked-donut]:checked');
+
+    req = $.ajax({
+        url: 'handler/remove.php',
+        type: 'post',
+        data: { 'id': checked.val() }
+    });
+
+    req.done(function (res, textStatus, jqXHR) {
+        if (res == "Success") {
+            checked.closest('tr').remove();
+            alert('Uspesno obrisano iz baze!');
+            
+        } else {
+            console.log("neuspesno brisanje " + res);
+            alert("neuspesno brisanje ");
+
+        }
+         
+    });
+
+
+
+});
 
 
 
